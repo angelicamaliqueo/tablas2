@@ -6,28 +6,44 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 from eralchemy import render_er
 
-Base = declarative_base()
+db = sqlalchemy()
 
-class Person(Base):
-    __tablename__ = 'person'
-    # Here we define columns for the table person
-    # Notice that each column is also a normal Python instance attribute.
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
+class User (db.Model):
+    __tablename__ = "user"
+    id = db.Column(ds.Integer,primary_Key=True)
+    User_correo = db.Column(String(50))
+    User_contraseña = db.Column(String(50))
 
-class Address(Base):
-    __tablename__ = 'address'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
-    id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
+class Capitulo (db.Model):
+    __tablename__ = "capitulo"
+    id = db.Column (db.Integer,primary_Key=True)
+            capitulo_capitulo = db.Column(String(70))
+            capitulo_nombre = db.Column((70)) 
+            capitulo_informacion = db.Column(String(70))
+            capitulo_detalle = db.Column(String(70))
 
-    def to_dict(self):
-        return {}
+class Personaje (db.Model):
+    __tablename__ = "personaje"  
+    id = db.Column (db.Integer,primary_Key=True)
+    nombre = db.Column (String(70)) 
+    imagen = db.Column (String(70))
+    specie = db.Column (String(70))
 
-## Draw from SQLAlchemy base
-render_er(Base, 'diagram.png')
+classFvoritoCapitulo(db.Model):
+    __tablename__ = "FavoritoCapitulo" 
+    id = db.Column (db.Integer,primary_Key=True)
+    Capitulo_id = db.Column(Integer, ForeignKey("capitulos.id"))
+    user_id = db.Column(Integer, ForeignKey("user.id"))
+    relacioncapitulo = relationship(Capitulo)
+    relacionuser = relationship(User
+
+class FavoritoPersonaje (db.Model):
+    __tablename__ = "FavoritoPersonaje"
+    id = db.Column (db.Integer,primary_Key=True) 
+    FavoritoPersonaje_id = db.Column(Integer, ForeignKey(personaje.id))
+    user_id = db.Column(Integer, ForeignKey("user.id")) 
+    relacionpersonaje = relationship(Personaje) 
+    relacionuser = relationship(User)  
+
+def to_dict(self):
+    return{}                   
